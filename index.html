@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuki (Jiayu) Yin</title>
+    <link rel="icon" href="images/palette.svg"/>
+
+    
+    <!-- Google Fonts: Playfair Display for elegance, Inter for modern readability -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS for layout -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            text: '#1a202c', /* 深色主文本，更接近黑色 */
+                            muted: '#4a5568', /* 加深后的灰色，提升可读性 */
+                            accent: '#e0c3fc'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS for Glassmorphism and Mesh Gradient -->
+    <style type="text/tailwindcss">
+        @layer components {
+            .text-link {
+                @apply text-brand-text underline decoration-pink-300 underline-offset-4 hover:text-pink-500 transition-colors;
+            }
+        }
+
+        body {
+            color: #1a202c;
+            overflow-x: hidden;
+        }
+
+        /* The Animated Ethereal Mesh Gradient Background */
+        .mesh-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background-color: #FFFFFF;
+            background-image: 
+                radial-gradient(at 10% 0%, hsla(328, 100%, 85%, 0.5) 0px, transparent 45%), /* pink */
+                radial-gradient(at 80% 0%, hsla(28, 100%, 80%, 0.4) 0px, transparent 30%), /* orange */
+                radial-gradient(at 10% 80%, hsla(270, 100%, 86%, 0.65) 0px, transparent 64%), /* purple */
+                radial-gradient(at 90% 90%, hsla(195, 100%, 80%, 0.6) 0px, transparent 40%), /* blue */
+                radial-gradient(at 20% 50%, rgba(255, 255, 255, 1) 0px, transparent 100%); 
+            filter: blur(70px);
+            animation: breathe 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes breathe {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        /* Glassmorphism Panel Utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.5); /* 提高对比度 */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 1.25rem; /* 20px */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 1rem;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 15px 35px rgba(224, 195, 252, 0.3);
+            border: 1px solid rgba(255, 255, 255, 1);
+        }
+
+        /* Soft Text Gradient */
+        .text-gradient {
+            background-color: #ff9a9e;
+            background-image: linear-gradient(90deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Navigation glass effect */
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        /* Animation classes for Javascript Intersection Observer */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Pill tags */
+        .tag-pill {
+            background: rgba(255, 231, 246, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            color: #4a5568;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            letter-spacing: 0.025em;
+        }
+
+        /* Photography Carousel Specific Styles */
+        .photo-carousel {
+                        
+            display: grid;
+            /* 强制两行布局 */
+            grid-template-rows: repeat(2, 1fr);
+            /* 让内容按列排列向右延伸 */
+            grid-auto-flow: column;
+            gap: 1rem; /* 照片之间的间距，可修改 */
+            
+            /* 你可以通过调整这个高度来改变整个画廊区域的高度 */
+            height: 55vh; 
+            max-height: 700px;
+            min-height: 400px;
+            
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch; 
+            padding-bottom: 0rem;
+            scrollbar-width: none; 
+            -ms-overflow-style: none;   
+        }
+
+        .photo-carousel::-webkit-scrollbar {
+            display: none; 
+        }
+
+        .photo-item {
+            scroll-snap-align: center;
+            flex: 0 0 auto;
+            height: 100%; /* 高度占满容器 */
+            margin-right: 1rem;
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            /* 让每张图片的宽度基于其高度自适应，这样照片就不会被拉伸变形 */
+            width: max-content;
+        }
+
+        .photo-item:last-child {
+            margin-right: 0;
+        }
+
+        .photo-image {
+            height: 100%;
+            width: auto; /* 核心修改：高度固定100%，宽度自适应，完美兼容横版和竖版照片 */
+            object-fit: cover;
+            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.5s ease;
+            filter: grayscale(20%) sepia(5%);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(26, 32, 44, 0.7) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+        }
+
+        .photo-item:hover .photo-image {
+            transform: scale(1.05);
+            filter: grayscale(0%) sepia(0%); /* 悬浮时恢复全彩 */
+        }
+
+        .photo-item:hover .photo-overlay {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-pink-200 selection:text-pink-900">
+
+    <!-- Background Layer -->
+    <div class="mesh-background"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 nav-glass transition-all duration-300">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="font-serif italic text-2xl font-bold text-brand-text">Yuki.</a>
+            <div class="space-x-8 hidden md:block font-medium text-sm">
+                <a href="#about" class="text-brand-text hover:text-pink-500 transition-colors">About</a>
+                <a href="#publications" class="text-brand-text hover:text-pink-500 transition-colors">Publications</a>
+                <a href="#projects" class="text-brand-text hover:text-pink-500 transition-colors">Projects</a>
+                <a href="#photography" class="text-brand-text hover:text-pink-500 transition-colors">Photography</a>
+                <a href="#contact" class="text-brand-text hover:text-pink-500 transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-6 pt-32 pb-24 space-y-32">
+
+        <!-- Hero / About Section -->
+        <section id="about" class="fade-in-up flex flex-col md:flex-row gap-12 items-center min-h-[60vh]">
+            <div class="flex-1 space-y-6 z-10">
+                <h1 class="text-3xl md:text-4xl font-serif font-bold leading-tight mb-4 text-brand-text">
+                    👋 Hello, I'm <span class="italic text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-orange-400">Yuki</span>.
+                </h1>
+                
+                <div class="space-y-4 text-lg text-brand-text max-w-2xl leading-relaxed font-normal">
+                    <p>
+                        My name is Yuki (Jiayu) Yin. I am an PhD student at <a href="https://engineering.ucsc.edu/departments/computational-media/" target="_blank" class="text-link">UCSC Computational Media</a> study Human-Computer Interaction, 
+                        advised by <a href="https://tech4good.soe.ucsc.edu/people" target="_blank" class="text-link">Prof. David Lee</a>. 
+                        My research focus on <b>Human-AI collboration, cognitive scaffolding, and interactive systems</b>. 
+                        <!-- My research investigates how we can design <strong>Generative AI systems as cognitive scaffolds</strong> rather than mere automation tools.  -->
+                        I design and build interfaces that empower <b>human creativity and learning</b>.
+                        <br>Before my PhD study, I gained my M.S degree at <a href="https://www.informatics.uci.edu/" target="_blank" class="text-link"> UC Irvine Informatics </a> advised by <a href="https://www.informatics.uci.edu/explore/faculty-profiles/madhu-reddy/" target="_blank" class="text-link">Prof. Madhu Reddy </a> 
+                        and worked at the <a href="https://designlab.ucsd.edu/" target="_blank" class="text-link">UCSD Design Lab</a> advised by <a href="https://spdow.ucsd.edu/" target="_blank" class="text-link">Prof. Steven Dow</a> 
+                        and <a href="https://ejane.me/" target="_blank" class="text-link">Prof. Jane E.</a>
+                        I gained my B.A degree at <a href="https://www.tsinghua.edu.cn/en/" target="_blank" class="text-link">Tsinghua University</a>, where I worked with <a href="https://www.ie.tsinghua.edu.cn/eng/info/1051/1008.htm" target="_blank" class="text-link">Prof. Pei-Luen Patrick Rau</a>.
+                    </p>
+                    
+                </div>
+
+                <div class="flex flex-wrap items-center gap-4 pt-4">
+                    <a href="#publications" class="px-6 py-3 rounded-full bg-white/60 hover:bg-white border border-white shadow-sm backdrop-blur-md transition-all font-medium text-brand-text shadow-sm hover:shadow-md hover:-translate-y-1">
+                        Read my research
+                    </a>
+                    <a href="#" target="_blank" class="px-6 py-3 rounded-full bg-white/60 hover:bg-white border border-white/60 transition-all font-medium text-brand-text shadow-sm hover:shadow-md hover:-translate-y-1">
+                         CV
+                    </a>
+                    <a href="mailto:jyin44@ucsc.edu" class="w-12 h-12 rounded-full bg-white/60 hover:bg-white flex items-center justify-center border border-white transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
+                        <svg class="w-5 h-5 text-brand-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/yuki-yin-673a10210/?locale=en_US" target="_blank" class="w-12 h-12 rounded-full bg-white/60 hover:bg-white flex items-center justify-center border border-white transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
+                        <svg class="w-5 h-5 text-brand-text" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="https://scholar.google.com/citations?user=AjLs4f4AAAAJ&hl=en" target="_blank" class="w-12 h-12 rounded-full bg-white/60 hover:bg-white flex items-center justify-center border border-white transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
+                        <!-- Google Scholar Icon -->
+                        <svg class="w-5 h-5 text-brand-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14v7"></path></svg>
+                    </a>
+
+                    <!-- Social Links -->
+                    <!-- <div class="flex gap-3 ml-0 md:ml-4">
+                       
+                    </div> -->
+                </div>
+            </div>
+            
+             <!-- Portrait Image Area with Hover Switch Effect -->
+            <div class="flex-1 flex justify-center w-full max-w-md relative">
+                <div class="absolute inset-0 bg-gradient-to-tr from-purple-200/50 to-orange-200/50 rounded-full blur-2xl animate-pulse"></div>
+                
+                <!-- "group" 这个 class 以触发内部图片的悬浮状态 -->
+                <div class="glass-panel w-72 h-80 md:w-80 md:h-96 relative overflow-hidden flex items-center justify-center rotate-3 hover:rotate-0 transition-transform duration-500 group cursor-pointer shadow-lg">
+                    
+                    <!-- 默认图片 (Hover时变成完全透明 opacity-0) -->
+                    <img src="images/selfie copy.jpg" alt="Yuki Portrait" 
+                         class="absolute inset-0 w-full h-full object-cover transition-opacity duration-400 ease-in-out group-hover:opacity-0 z-20">
+                    
+                    <!-- (Hover时从透明变成完全可见 opacity-100) -->
+                    <img src="images/selfie2 copy.jpg" alt="Yuki Fun Portrait" 
+                         class="absolute inset-0 w-full h-full object-cover transition-opacity duration-400 ease-in-out opacity-0 group-hover:opacity-100 z-10">
+                         
+                </div>
+            </div>
+            
+    
+        </section>
+
+        <!-- Publications -->
+        <section id="publications" class="fade-in-up">
+            <h2 class="text-3xl font-serif font-bold mb-8 flex items-center gap-4">
+                Publications
+                <div class="h-[1px] flex-1 bg-gradient-to-r from-brand-text/20 to-transparent"></div>
+            </h2>
+            
+            <div class="space-y-6">
+                <!-- Pub Item 1 -->
+                <article class="glass-card p-6 md:p-8 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
+                    <div class="md:w-48 shrink-0">
+                        <div class="w-full h-32 rounded-xl border border-white/80 flex items-center justify-center overflow-hidden">
+                            <img src="images/GenUIposter.png" alt="Scaffolding or Replacing? Paper" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                    </div>
+                    <div class="flex-1 space-y-3">
+                        <div class="flex gap-2 flex-wrap mb-1">
+                            <span class="tag-pill">CHI 2026 LBW</span>
+                            <span class="tag-pill">Under Review</span>
+                        </div>
+                        <h3 class="text-lg font-serif font-bold group-hover:text-blue-500 transition-colors">
+                            Scaffolding or Replacing? Exploring the Impact of Generative UI on Novice Design Learning
+                        </h3>
+                        <p class="text-sm text-brand-muted">
+                            <span class="font-semibold text-brand-text">Jiayu Yuki Yin</span>, Anonymous Authors.
+                        </p>
+                        
+                    </div>
+                </article>
+
+                <!-- Pub Item 2 -->
+                <article class="glass-card p-6 md:p-8 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
+                    <div class="md:w-48 shrink-0">
+                        <div class="w-full h-32 rounded-xl bg-gradient-to-br from-white/60 to-pink-100/60 border border-white/80 flex items-center justify-center overflow-hidden">
+                            <!-- Pub thumbnail placeholder -->
+                             <img src="images/microrole_poster.png" alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+
+                        </div>
+                    </div>
+                    <div class="flex-1 space-y-3">
+                        <div class="flex gap-2 flex-wrap mb-1">
+                            <span class="tag-pill">CHI 2026 LBW</span>
+                            <span class="tag-pill">Under Review</span>
+                        </div>
+                        <h3 class="text-lg font-serif font-bold group-hover:text-violet-500 transition-colors">
+                            Bringing “On-the-Job” Learning into Education: Lessons From a Micro-Role Apprenticeship Program and Implications for Platform Design
+                        </h3>
+                        <p class="text-sm text-brand-muted">
+                            <span class="font-semibold text-brand-text">Jiayu Yuki Yin</span>, Anonymous Authors.
+                        </p>
+                        
+                    </div>
+                </article>
+
+                <!-- Pub Item 3 -->
+                <article class="glass-card p-6 md:p-8 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
+                    <div class="md:w-48 shrink-0">
+                        <div class="w-full h-32 rounded-xl bg-gradient-to-br from-white/60 to-pink-100/60 border border-white/80 flex items-center justify-center overflow-hidden">
+                            <!-- Pub thumbnail placeholder -->
+                            <img src="images/microrole_ICER.png" alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                    </div>
+                    <div class="flex-1 space-y-3">
+                        <div class="flex gap-2 flex-wrap mb-1">
+                            <span class="tag-pill">ICER 2026 </span>
+                            <span class="tag-pill">In Submission</span>
+                        </div>
+                        <h3 class="text-lg font-serif font-bold group-hover:text-teal-500 transition-colors">
+                            Implementing on-the-job Learning in Education: Lessons from Deploying a Micro-role Based Apprenticeship Learning Program
+                        </h3>
+                        <p class="text-sm text-brand-muted">
+                            <span class="font-semibold text-brand-text">Jiayu Yuki Yin</span>, Anonymous Authors.
+                        </p>
+
+                    </div>
+                </article>
+
+                <!-- Pub Item 4 -->
+                <article class="glass-card p-6 md:p-8 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
+                    <div class="md:w-48 shrink-0">
+                        <div class="w-full h-32 rounded-xl bg-gradient-to-br from-white/60 to-purple-100/60 border border-white/80 flex items-center justify-center overflow-hidden">
+                        <img src="images/CSCW2025.png" alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+
+                        </div>
+                    </div>
+                    <div class="flex-1 space-y-3">
+                        <div class="flex gap-2 flex-wrap mb-1">
+                            <span class="tag-pill">CSCW 2025</span>
+                            <span class="tag-pill">Master Thesis</span>
+
+                        </div>
+                        <h3 class="text-lg font-serif font-bold group-hover:text-sky-500 transition-colors">
+                            Understanding User Experience of Support-Seeking on Reddit During Stressful Times
+                        </h3>
+                        <p class="text-sm text-brand-muted">
+                            <span class="font-semibold text-brand-text">Jiayu Yuki Yin</span>, Novia Wong, Maddhu Reddy.
+                        </p>
+                        <div class="flex gap-4 pt-2">
+                            <a href="https://dl.acm.org/doi/abs/10.1145/3757694" class="text-sm font-medium border-b border-brand-text/30 hover:border-pink-500 hover:text-pink-500 transition-all">DOI</a>
+                            <a href="https://dl.acm.org/doi/pdf/10.1145/3757694" class="text-sm font-medium border-b border-brand-text/30 hover:border-pink-500 hover:text-pink-500 transition-all">PDF (CSCW 205)</a>
+                            <a href="https://www.proquest.com/openview/1f593bcc135ca640e3aa436b2ea8b63c/1?pq-origsite=gscholar&cbl=18750&diss=y" class="text-sm font-medium border-b border-brand-text/30 hover:border-pink-500 hover:text-pink-500 transition-all">PDF (Master Thesis)</a>
+                        </div>
+                    </div>
+                </article>
+
+
+                <!-- Pub Item 5 -->
+                <article class="glass-card p-6 md:p-8 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
+                    <div class="md:w-48 shrink-0">
+                        <div class="w-full h-32 rounded-xl bg-gradient-to-br from-white/60 to-purple-100/60 border border-white/80 flex items-center justify-center overflow-hidden">
+                            <img src="images/5Y.png" alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                    </div>
+                    <div class="flex-1 space-y-3">
+                        <div class="flex gap-2 flex-wrap mb-1">
+                            <span class="tag-pill">IUI 2024</span>
+
+                        </div>
+                        <h3 class="text-lg font-serif font-bold group-hover:text-red-400 transition-colors">
+                            Jamplate: Exploring LLM-enhanced templates for idea reflection
+                        </h3>
+                        <p class="text-sm text-brand-muted">
+                            Xiaotong Xu, <span class="font-semibold text-brand-text">Jiayu Yin</span>, Catherine Gu, Jenny Mar, Sydney Zhang, Jane L E, Steven P Dow.
+                        </p>
+                        <div class="flex gap-4 pt-2">
+                            <a href="https://link.springer.com/chapter/10.1007/978-3-031-22131-6_13" class="text-sm font-medium border-b border-brand-text/30 hover:border-pink-500 hover:text-pink-500 transition-all">DOI</a>
+                            <a href="https://drive.google.com/file/d/1A32iTHXu5GmisTWwFL9RTg6rB9YLXUDP/view" class="text-sm font-medium border-b border-brand-text/30 hover:border-pink-500 hover:text-pink-500 transition-all">PDF</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Pub Item 6 -->
+                <article class="glass-card p-6 md:p-8 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
+                    <div class="md:w-48 shrink-0">
+                        <div class="w-full h-32 rounded-xl bg-gradient-to-br from-white/60 to-purple-100/60 border border-white/80 flex items-center justify-center overflow-hidden">
+                            <img src="images/swot.jpg" alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+
+                        </div>
+                    </div>
+                    <div class="flex-1 space-y-3">
+                        <div class="flex gap-2 flex-wrap mb-1">
+                            <span class="tag-pill">HCII 2022</span>
+
+                        </div>
+                        <h3 class="text-lg font-serif font-bold group-hover:text-blue-500 transition-colors">
+                            Exploring Different Social Roles of IoT Conversational Agents on User Experience
+                        </h3>
+                        <p class="text-sm text-brand-muted">
+                            <span class="font-semibold text-brand-text">Jiayu Yin</span>, Qinyan Dai, Xingyu Wang, Sinan Xie, Xinyue Kang, Pei-Luen Patrick Rau.
+                        </p>
+                        <div class="flex gap-4 pt-2">
+                            <a href="https://link.springer.com/chapter/10.1007/978-3-031-22131-6_13" class="text-sm font-medium border-b border-brand-text/30 hover:border-pink-500 hover:text-pink-500 transition-all">DOI</a>
+                            <a href="https://drive.google.com/file/d/1A32iTHXu5GmisTWwFL9RTg6rB9YLXUDP/view" class="text-sm font-medium border-b border-brand-text/30 hover:border-pink-500 hover:text-pink-500 transition-all">PDF</a>
+                        </div>
+                    </div>
+                </article>
+
+
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section id="projects" class="fade-in-up">
+            <h2 class="text-3xl font-serif font-bold mb-8 flex items-center gap-4">
+                Design & Data Analysis Projects
+                <div class="h-[1px] flex-1 bg-gradient-to-r from-brand-text/20 to-transparent"></div>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Project 1 -->
+                <a href="https://yinjythu.wixsite.com/home/private-closet" class="glass-card overflow-hidden group block">
+                    <!-- Project Image Area -->
+                    <div class="aspect-[2/1] relative  overflow-hidden flex items-center justify-center border-b border-white/40">
+                        <!-- Abstract shapes as image placeholder -->
+                        <img src="images/closet.png" alt="My Personal Stylist Project" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="w-24 h-24 rounded-full border border-white/60 absolute -bottom-6 -right-4 blur-[2px]"></div>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="flex gap-2 mb-2">
+                            <span class="tag-pill">Immersive Experience</span>
+                            <span class="tag-pill">UI/UX</span>
+                             <span class="tag-pill">Producet Design</span>
+
+                        </div>
+                        <h3 class="text-xl font-serif font-bold group-hover:text-orange-500 transition-colors">My Personal Stylist</h3>
+                        <p class="text-sm font-normal text-brand-muted leading-relaxed">
+                            An immersive experience design combining App and smart home closet to help people in choosing outfits and clothes management.
+                        </p>
+                    </div>
+                </a>
+
+                <!-- Project 2 -->
+                <a href="https://yinjythu.wixsite.com/home/swot-family" class="glass-card overflow-hidden group block">
+                    <div class="aspect-[2/1] relative overflow-hidden flex items-center justify-center border-b border-white/40">
+                        <img src="images/swot.png" alt="Social Web of IoT Family Project" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="w-24 h-24 rounded-full border border-white/60 absolute -bottom-6 -right-4 blur-[2px]"></div>
+
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="flex gap-2 mb-2">
+                            <span class="tag-pill">Conceptual Design</span>
+                            <span class="tag-pill">UXResearch</span>
+                            <span class="tag-pill">Conversational Agent</span>
+
+                        </div>
+                        <h3 class="text-xl font-serif font-bold group-hover:text-blue-400 transition-colors">Social Web of IoT Family</h3>
+                        <p class="text-sm font-normal text-brand-muted leading-relaxed">
+                            Imagine all of your things act as your FRIENDS, chatting with you, taking care of you, even making fun of you...🙈
+                        </p>
+                    </div>
+                </a>
+
+                <!-- Project 5 -->
+                <a href="https://docs.google.com/presentation/d/15gMhi_tDx3WrpM8rACKx45lhmpmbEznp/edit?slide=id.p1#slide=id.p1" class="glass-card overflow-hidden group block">
+                    <div class="aspect-[2/1] bg-white/20 relative overflow-hidden flex items-center justify-center border-b border-white/40">
+                        <img src="images/Sentiment.png" alt="Sentiment Analysis Project" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="w-24 h-24 rounded-full border border-white/60 absolute -bottom-6 -right-4 blur-[2px]"></div>
+
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="flex gap-2 mb-2">
+                            <span class="tag-pill">Sentiment Analysis</span>
+                            <span class="tag-pill">Reddit API</span>
+                            <span class="tag-pill">Phython</span>
+                        </div>
+                        <h3 class="text-xl font-serif font-bold group-hover:text-teal-600 transition-colors">Quantitative Analysis of Social Support in Online Communities</h3>
+                        <p class="text-sm font-normal text-brand-muted leading-relaxed">
+                            A Quantitative study on r/mentalillness examined post flairs' effect on social support using sentiment analysis.
+                        </p>
+                    </div>
+                </a>
+
+
+                 <!-- Project 3 -->
+                <a href="https://yinjythu.wixsite.com/home/starry-rain" class="glass-card overflow-hidden group block">
+                    <div class="aspect-[2/1] bg-white/20 relative overflow-hidden flex items-center justify-center border-b border-white/40">
+                        <img src="images/Starry.png" alt="Starry Rain Project" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="w-24 h-24 rounded-full border border-white/60 absolute -bottom-6 -right-4 blur-[2px]"></div>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="flex gap-2 mb-2">
+                            <span class="tag-pill">UXD Internship</span>
+                            <span class="tag-pill"> AI For Good</span>
+                        </div>
+                        <h3 class="text-xl font-serif font-bold group-hover:text-sky-500 transition-colors">Starry Rain: Empower Autistic Children</h3>
+                        <p class="text-sm font-normal text-brand-muted leading-relaxed">
+                            Design a system to help the treatment and evaluation of children with autism.
+                        </p>
+                    </div>
+                </a>
+
+
+                <!-- Project 4 -->
+                <a href="https://yinjythu.wixsite.com/home/interacting-with-poem" class="glass-card overflow-hidden group block">
+                    <div class="aspect-[2/1] bg-white/20 relative overflow-hidden flex items-center justify-center border-b border-white/40">
+                        <img src="images/poem.gif" alt="Interacting with Ancient Poem Project" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="w-24 h-24 rounded-full border border-white/60 absolute -bottom-6 -right-4 blur-[2px]"></div>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="flex gap-2 mb-2">
+                            <span class="tag-pill">Interactive Installation</span>
+                            <span class="tag-pill">Display Design</span>
+                            <span class="tag-pill">Computer Vision</span>
+                        </div>
+                        <h3 class="text-xl font-serif font-bold group-hover:text-purple-600 transition-colors">Interacting with Ancient Poem</h3>
+                        <p class="text-sm font-normal text-brand-muted leading-relaxed">
+                            An art installation to interact with ancient poems through hand gesture shadow.
+                        </p>
+                    </div>
+                </a>
+
+
+               
+            </div>
+        </section>
+
+        <!-- Photography: Visual Diary -->
+        <section id="photography" class="fade-in-up">
+            <div class="flex items-end justify-between mb-8">
+                <div>
+                    <h2 class="text-3xl font-serif font-bold flex items-center gap-4">
+                        Photography
+                    </h2>
+                    <p class="text-brand-muted mt-2 font-normal">Moments captured through my lens.</p>
+                </div>
+                <!-- 引导滚动的提示，仅在桌面端显示 -->
+                <div class="hidden md:flex items-center gap-2 text-sm text-brand-muted/70 font-medium">
+                    Scroll to explore
+                    <svg class="w-4 h-4 animate-bounce-x" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </div>
+            </div>
+
+            <!-- 水平滚动容器 -->
+            <div class="photo-carousel relative -mx-6 px-6 md:mx-0 md:px-0">
+                
+                <!-- 照片卡片 1 (横版构图测试) -->
+                <div class="photo-item group cursor-crosshair">
+                    <img src="images/P1.pic.jpg" alt="Milkyway" class="photo-image">
+                    <div class="photo-overlay">
+                        <p class="text-white/80 text-sm font-light transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">Erdos, China. 2020</p>
+                    </div>
+                </div>
+
+                <!-- 照片卡片 2  -->
+                <div class="photo-item group cursor-crosshair">
+                    <img src="images/P4.pic.jpg" alt="" class="photo-image">
+                    <div class="photo-overlay">
+                        <p class="text-white/80 text-sm font-light transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">Yunnan, China. 2020</p>
+                    </div>
+                </div>
+                
+                <!-- 照片卡片 5 -->
+                <div class="photo-item group cursor-crosshair">
+                    <img src="images/p5.jpg" alt="" class="photo-image">
+                    <div class="photo-overlay">
+                        <p class="text-white/80 text-sm font-light transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">Beijing, China. 2022</p>
+                    </div>
+                </div>
+
+                <!-- 照片 6 -->
+                <div class="photo-item group cursor-crosshair">
+                    <img src="images/p12.jpg" alt="" class="photo-image">
+                    <div class="photo-overlay">
+                        <p class="text-white/80 text-sm font-light transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">Hainan, China. 2022</p>
+                    </div>
+                </div>
+
+                <!-- 照片卡片 3  -->
+                <div class="photo-item group cursor-crosshair">
+                    <img src="images/P3.pic.jpg" alt="" class="photo-image">
+                    <div class="photo-overlay">
+                        <p class="text-white/80 text-sm font-light transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">Beijing, China. 2019</p>
+                    </div>
+                </div>
+
+            
+
+               
+
+                <!-- 照片卡片 8 -->
+                <div class="photo-item group cursor-crosshair">
+                    <img src="images/p14.jpg" alt="" class="photo-image">
+                    <div class="photo-overlay">
+                        <p class="text-white/80 text-sm font-light transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">Corolado, USA. 2023</p>
+                    </div>
+                </div>
+
+
+                <!-- 照片卡片 6 -->
+                <div class="photo-item group cursor-crosshair">
+                    <img src="images/p10.jpg" alt="" class="photo-image">
+                    <div class="photo-overlay">
+                        <p class="text-white/80 text-sm font-light transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">Hainan, China. 2022</p>
+                    </div>
+                </div>
+
+                <!-- 照片卡片 7 -->
+                <div class="photo-item group cursor-crosshair">
+                    <img src="images/p11.jpg" alt="" class="photo-image">
+                    <div class="photo-overlay">
+                        <p class="text-white/80 text-sm font-light transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">Hainan, China. 2022</p>
+                    </div>
+                </div>
+
+
+            
+            <!-- (可选) 查看全部作品链接 -->
+            <div class="mt-6 flex justify-end">
+                <a href="" class="text-sm font-medium text-brand-muted hover:text-pink-500 flex items-center gap-1 transition-colors border-b border-transparent hover:border-pink-500 pb-0.5">
+                    View full gallery
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="border-t border-white/40 mt-12 glass-panel rounded-none rounded-t-3xl pb-12 pt-16">
+        <div class="max-w-5xl mx-auto px-6 text-center space-y-8">
+            <h2 class="text-4xl font-serif font-bold">Let's connect!</h2>
+            <p class="text-brand-muted font-normal max-w-xl mx-auto">
+                I am always open to discussing research collaborations, mentoring students,
+                or chatting about HCI/design/photography. Feel free to reach out to me via email or connect on LinkedIn!
+                <br> For undergrad/master students interested in research opportunities with me, please email me with your CV and a brief intro of your interests! :)
+            </p>
+                      <!-- 加入底部的社交按钮 -->
+            <div class="flex justify-center gap-6">
+                <a href="mailto:jyin44@ucsc.edu" class="w-12 h-12 rounded-full bg-white/60 hover:bg-white flex items-center justify-center border border-white transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
+                    <svg class="w-5 h-5 text-brand-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/yuki-yin-673a10210/?locale=en_US" target="_blank" class="w-12 h-12 rounded-full bg-white/60 hover:bg-white flex items-center justify-center border border-white transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
+                    <svg class="w-5 h-5 text-brand-text" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+            </div>
+
+            <p class="text-xs text-brand-muted/60 mt-8">
+                &copy; 2026 Yuki. Designed with intention.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Javascript for Scroll Animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Intersection Observer for fade-in elements
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('appear');
+                        observer.unobserve(entry.target); // Stop observing once it appears
+                    }
+                });
+            }, observerOptions);
+
+            // Select all elements with fade-in-up class
+            const fadeElements = document.querySelectorAll('.fade-in-up');
+            fadeElements.forEach(el => observer.observe(el));
+            
+            // Navbar scroll effect
+            const nav = document.querySelector('.nav-glass');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('shadow-sm', 'bg-white/60');
+                    nav.classList.remove('bg-white/20');
+                } else {
+                    nav.classList.remove('shadow-sm', 'bg-white/60');
+                    nav.classList.add('bg-white/20');
+                }
+            });
+
+            // 简单的动画处理箭头 (针对水平滚动)
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes bounce-x {
+                    0%, 100% { transform: translateX(0); }
+                    50% { transform: translateX(5px); }
+                }
+                .animate-bounce-x {
+                    animation: bounce-x 2s infinite;
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
