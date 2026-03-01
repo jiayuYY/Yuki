@@ -40,6 +40,25 @@
             .text-link {
                 @apply text-brand-text underline decoration-pink-300 underline-offset-4 hover:text-pink-500 transition-colors;
             }
+            /* Pill tags */
+            .tag-pill {
+                background: rgba(255, 231, 246, 0.6);
+                border: 0px;
+                color: #4a5568;
+                font-size: 12px;
+                font-weight: 500;
+                padding: 0.25rem 0.5rem;
+                border-radius: 9999px;
+                letter-spacing: 0.025em;
+            }
+            /* --- Publication Item 统一组件 --- */
+            /* 移除了导致崩溃的 glass-card，把它直接写在 HTML 里了 */
+      
+            .pub-title {
+                @apply text-lg font-serif font-bold transition-colors leading-snug;
+            }
+            
+       
         }
 
         body {
@@ -123,18 +142,6 @@
         .fade-in-up.appear {
             opacity: 1;
             transform: translateY(0);
-        }
-
-        /* Pill tags */
-        .tag-pill {
-            background: rgba(255, 231, 246, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            color: #4a5568;
-            font-size: 0.75rem;
-            font-weight: 500;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            letter-spacing: 0.025em;
         }
 
         /* Photography Carousel Specific Styles */
@@ -244,12 +251,12 @@
                 
                 <div class="space-y-4 text-lg text-brand-text max-w-2xl leading-relaxed font-normal">
                     <p>
-                        My name is Yuki (Jiayu) Yin. I am an PhD student at <a href="https://engineering.ucsc.edu/departments/computational-media/" target="_blank" class="text-link">UCSC Computational Media</a> study Human-Computer Interaction, 
+                        My name is Yuki (Jiayu) Yin. I am a PhD student at <a href="https://engineering.ucsc.edu/departments/computational-media/" target="_blank" class="text-link">UCSC Computational Media</a> studying Human-Computer Interaction, 
                         advised by <a href="https://tech4good.soe.ucsc.edu/people" target="_blank" class="text-link">Prof. David Lee</a>. 
-                        My research focus on <b>Human-AI collboration, cognitive scaffolding, and interactive systems</b>. 
+                        My research focuses on <b>Human-AI collaboration, cognitive scaffolding, and interactive systems</b>. 
                         <!-- My research investigates how we can design <strong>Generative AI systems as cognitive scaffolds</strong> rather than mere automation tools.  -->
                         I design and build interfaces that empower <b>human creativity and learning</b>.
-                        <br>Before my PhD study, I gained my M.S degree at <a href="https://www.informatics.uci.edu/" target="_blank" class="text-link"> UC Irvine Informatics </a> advised by <a href="https://www.informatics.uci.edu/explore/faculty-profiles/madhu-reddy/" target="_blank" class="text-link">Prof. Madhu Reddy </a> 
+                        <br><br>Before my PhD study, I gained my M.S degree at <a href="https://www.informatics.uci.edu/" target="_blank" class="text-link"> UC Irvine Informatics </a> advised by <a href="https://www.informatics.uci.edu/explore/faculty-profiles/madhu-reddy/" target="_blank" class="text-link">Prof. Madhu Reddy </a> 
                         and worked at the <a href="https://designlab.ucsd.edu/" target="_blank" class="text-link">UCSD Design Lab</a> advised by <a href="https://spdow.ucsd.edu/" target="_blank" class="text-link">Prof. Steven Dow</a> 
                         and <a href="https://ejane.me/" target="_blank" class="text-link">Prof. Jane E.</a>
                         I gained my B.A degree at <a href="https://www.tsinghua.edu.cn/en/" target="_blank" class="text-link">Tsinghua University</a>, where I worked with <a href="https://www.ie.tsinghua.edu.cn/eng/info/1051/1008.htm" target="_blank" class="text-link">Prof. Pei-Luen Patrick Rau</a>.
@@ -291,11 +298,11 @@
                     
                     <!-- 默认图片 (Hover时变成完全透明 opacity-0) -->
                     <img src="images/selfie copy.jpg" alt="Yuki Portrait" 
-                         class="absolute inset-0 w-full h-full object-cover transition-opacity duration-400 ease-in-out group-hover:opacity-0 z-20">
+                         class="absolute inset-0 w-full h-full object-cover transition-opacity duration-100 group-hover:opacity-0 z-20">
                     
                     <!-- (Hover时从透明变成完全可见 opacity-100) -->
                     <img src="images/selfie2 copy.jpg" alt="Yuki Fun Portrait" 
-                         class="absolute inset-0 w-full h-full object-cover transition-opacity duration-400 ease-in-out opacity-0 group-hover:opacity-100 z-10">
+                         class="absolute inset-0 w-full h-full object-cover transition-opacity duration-100 opacity-0 group-hover:opacity-100 z-10">
                          
                 </div>
             </div>
@@ -310,31 +317,34 @@
                 <div class="h-[1px] flex-1 bg-gradient-to-r from-brand-text/20 to-transparent"></div>
             </h2>
             
-            <div class="space-y-6">
+            <div class="space-y-5">
+
                 <!-- Pub Item 1 -->
-                <!-- <article class="glass-card p-6 md:p-8 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
+                 <article class="glass-card p-3 md:p-4 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
                     <div class="md:w-48 shrink-0">
-                        <div class="w-full h-32 rounded-xl border border-white/80 flex items-center justify-center overflow-hidden">
-                            <img src="images/GenUIposter.png" alt="Scaffolding or Replacing? Paper" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="w-full h-32 rounded-xl bg-gradient-to-br from-white/60 to-pink-100/60 border border-white/80 flex items-center justify-center overflow-hidden">
+                            <!-- Pub thumbnail placeholder -->
+                            <img src="images/microrole_ICER.png" alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         </div>
                     </div>
                     <div class="flex-1 space-y-3">
                         <div class="flex gap-2 flex-wrap mb-1">
-                            <span class="tag-pill">CHI 2026 LBW</span>
+                            <span class="tag-pill">ICER 2026 </span>
                             <span class="tag-pill">Under Review</span>
                         </div>
-                        <h3 class="text-lg font-serif font-bold group-hover:text-blue-500 transition-colors">
-                            Scaffolding or Replacing? Exploring the Impact of Generative UI on Novice Design Learning
+                        <h3 class="text-base font-medium group-hover:text-teal-500 transition-colors">
+                            Implementing on-the-job Learning in Education: Lessons from Deploying a Micro-role Based Apprenticeship Learning Program
                         </h3>
                         <p class="text-sm text-brand-muted">
                             <span class="font-semibold text-brand-text">Jiayu Yuki Yin</span>, Anonymous Authors.
                         </p>
-                        
-                    </div>
-                </article> -->
 
+                    </div>
+                </article>
+
+                
                 <!-- Pub Item 2 -->
-                <article class="glass-card p-6 md:p-8 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
+                <article class="glass-card p-3 md:p-4 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
                     <div class="md:w-48 shrink-0">
                         <div class="w-full h-32 rounded-xl bg-gradient-to-br from-white/60 to-pink-100/60 border border-white/80 flex items-center justify-center overflow-hidden">
                             <!-- Pub thumbnail placeholder -->
@@ -347,54 +357,55 @@
                             <span class="tag-pill">CHI 2026 LBW</span>
                             <span class="tag-pill">To appear</span>
                         </div>
-                        <h3 class="text-lg font-serif font-bold group-hover:text-violet-500 transition-colors">
+                        <h3 class="text-base font-medium group-hover:text-violet-500 transition-colors">
                             Bringing “On-the-Job” Learning into Education: Lessons From a Micro-Role Apprenticeship Program and Implications for Platform Design
                         </h3>
                         <p class="text-sm text-brand-muted">
-                            <span class="font-semibold text-brand-text">Jiayu Yuki Yin</span>, Anonymous Authors.
+                            Audrey Ostrom*, <span class="font-semibold text-brand-text">Jiayu Yuki Yin*</span>, Jose Manuel Chavez, Pragna Chennuri, Jialai Li, 
+                            Ashwin Nagarajan, Psi Padhya, Yash Raj Singh, Sonia Salunke, Iris Tai, Chi-Kwan Jasmine Tai, David T Lee
                         </p>
                         
                     </div>
                 </article>
 
                 <!-- Pub Item 3 -->
-                <article class="glass-card p-6 md:p-8 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
+                <article class="glass-card p-3 md:p-4 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
                     <div class="md:w-48 shrink-0">
-                        <div class="w-full h-32 rounded-xl bg-gradient-to-br from-white/60 to-pink-100/60 border border-white/80 flex items-center justify-center overflow-hidden">
-                            <!-- Pub thumbnail placeholder -->
-                            <img src="images/microrole_ICER.png" alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="w-full h-32 rounded-xl border border-white/10 flex items-center justify-center overflow-hidden">
+                            <!-- <img src="images/GenUIposter.png" alt="Scaffolding or Replacing? Paper" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"> -->
                         </div>
                     </div>
-                    <div class="flex-1 space-y-3">
+                    <div class="flex-1 space-y-2">
                         <div class="flex gap-2 flex-wrap mb-1">
-                            <span class="tag-pill">ICER 2026 </span>
-                            <span class="tag-pill">In Submission</span>
+                            <span class="tag-pill">CHI 2026 Workshop</span>
                         </div>
-                        <h3 class="text-lg font-serif font-bold group-hover:text-teal-500 transition-colors">
-                            Implementing on-the-job Learning in Education: Lessons from Deploying a Micro-role Based Apprenticeship Learning Program
+                        <h3 class="text-base font-medium group-hover:text-blue-500 transition-colors">
+                            From Automation to Scaffolding: Rethinking Generative UI for Design Upskilling
                         </h3>
                         <p class="text-sm text-brand-muted">
-                            <span class="font-semibold text-brand-text">Jiayu Yuki Yin</span>, Anonymous Authors.
+                            <span class="font-semibold text-brand-text">Jiayu Yuki Yin</span>, David T Lee.
                         </p>
-
+                        
                     </div>
                 </article>
 
+
+
                 <!-- Pub Item 4 -->
-                <article class="glass-card p-6 md:p-8 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
+                <article class="glass-card p-3 md:p-4 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
                     <div class="md:w-48 shrink-0">
                         <div class="w-full h-32 rounded-xl bg-gradient-to-br from-white/60 to-purple-100/60 border border-white/80 flex items-center justify-center overflow-hidden">
                         <img src="images/CSCW2025.png" alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
 
                         </div>
                     </div>
-                    <div class="flex-1 space-y-3">
+                    <div class="flex-1 space-y-2">
                         <div class="flex gap-2 flex-wrap mb-1">
                             <span class="tag-pill">CSCW 2025</span>
                             <span class="tag-pill">Master Thesis</span>
 
                         </div>
-                        <h3 class="text-lg font-serif font-bold group-hover:text-sky-500 transition-colors">
+                        <h3 class="text-base font-medium group-hover:text-sky-500 transition-colors">
                             Understanding User Experience of Support-Seeking on Reddit During Stressful Times
                         </h3>
                         <p class="text-sm text-brand-muted">
@@ -410,18 +421,18 @@
 
 
                 <!-- Pub Item 5 -->
-                <article class="glass-card p-6 md:p-8 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
+                <article class="glass-card p-3 md:p-4 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
                     <div class="md:w-48 shrink-0">
                         <div class="w-full h-32 rounded-xl bg-gradient-to-br from-white/60 to-purple-100/60 border border-white/80 flex items-center justify-center overflow-hidden">
                             <img src="images/5Y.png" alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         </div>
                     </div>
-                    <div class="flex-1 space-y-3">
+                    <div class="flex-1 space-y-2">
                         <div class="flex gap-2 flex-wrap mb-1">
                             <span class="tag-pill">IUI 2024</span>
 
                         </div>
-                        <h3 class="text-lg font-serif font-bold group-hover:text-red-400 transition-colors">
+                        <h3 class="text-base font-medium group-hover:text-red-400 transition-colors">
                             Jamplate: Exploring LLM-enhanced templates for idea reflection
                         </h3>
                         <p class="text-sm text-brand-muted">
@@ -435,19 +446,19 @@
                 </article>
 
                 <!-- Pub Item 6 -->
-                <article class="glass-card p-6 md:p-8 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
+                <article class="glass-card p-3 md:p-4 flex flex-col md:flex-row gap-6 relative group cursor-pointer">
                     <div class="md:w-48 shrink-0">
                         <div class="w-full h-32 rounded-xl bg-gradient-to-br from-white/60 to-purple-100/60 border border-white/80 flex items-center justify-center overflow-hidden">
                             <img src="images/swot.jpg" alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
 
                         </div>
                     </div>
-                    <div class="flex-1 space-y-3">
+                    <div class="flex-1 space-y-2">
                         <div class="flex gap-2 flex-wrap mb-1">
                             <span class="tag-pill">HCII 2022</span>
 
                         </div>
-                        <h3 class="text-lg font-serif font-bold group-hover:text-blue-500 transition-colors">
+                        <h3 class="text-base font-medium group-hover:text-blue-500 transition-colors">
                             Exploring Different Social Roles of IoT Conversational Agents on User Experience
                         </h3>
                         <p class="text-sm text-brand-muted">
@@ -471,7 +482,7 @@
                 <div class="h-[1px] flex-1 bg-gradient-to-r from-brand-text/20 to-transparent"></div>
             </h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 
                 <!-- Project 1 -->
                 <a href="https://yinjythu.wixsite.com/home/private-closet" class="glass-card overflow-hidden group block">
@@ -481,14 +492,13 @@
                         <img src="images/closet.png" alt="My Personal Stylist Project" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                         <div class="w-24 h-24 rounded-full border border-white/60 absolute -bottom-6 -right-4 blur-[2px]"></div>
                     </div>
-                    <div class="p-6 space-y-3">
-                        <div class="flex gap-2 mb-2">
-                            <span class="tag-pill">Immersive Experience</span>
+                    <div class="p-6 space-y-2">
+                        <div class="flex gap-2 mb-0">
                             <span class="tag-pill">UI/UX</span>
                              <span class="tag-pill">Producet Design</span>
 
                         </div>
-                        <h3 class="text-xl font-serif font-bold group-hover:text-orange-500 transition-colors">My Personal Stylist</h3>
+                        <h3 class="text-base font-semibold group-hover:text-orange-500 transition-colors">My Personal Stylist</h3>
                         <p class="text-sm font-normal text-brand-muted leading-relaxed">
                             An immersive experience design combining App and smart home closet to help people in choosing outfits and clothes management.
                         </p>
@@ -502,34 +512,39 @@
                         <div class="w-24 h-24 rounded-full border border-white/60 absolute -bottom-6 -right-4 blur-[2px]"></div>
 
                     </div>
-                    <div class="p-6 space-y-3">
-                        <div class="flex gap-2 mb-2">
+                    <div class="p-6 space-y-2">
+                        <div class="flex gap-2 mb-0">
                             <span class="tag-pill">Conceptual Design</span>
                             <span class="tag-pill">UXResearch</span>
-                            <span class="tag-pill">Conversational Agent</span>
-
                         </div>
-                        <h3 class="text-xl font-serif font-bold group-hover:text-blue-400 transition-colors">Social Web of IoT Family</h3>
+                        <div class="flex gap-2 mb-0">
+                            <span class="tag-pill">Conversational Agent</span>
+                        </div>
+
+                        <h3 class="text-base font-semibold group-hover:text-blue-400 transition-colors">Social Web of IoT Family</h3>
                         <p class="text-sm font-normal text-brand-muted leading-relaxed">
                             Imagine all of your things act as your FRIENDS, chatting with you, taking care of you, even making fun of you...🙈
                         </p>
                     </div>
                 </a>
 
-                <!-- Project 5 -->
+                <!-- Project 3 -->
                 <a href="https://docs.google.com/presentation/d/15gMhi_tDx3WrpM8rACKx45lhmpmbEznp/edit?slide=id.p1#slide=id.p1" class="glass-card overflow-hidden group block">
                     <div class="aspect-[2/1] bg-white/20 relative overflow-hidden flex items-center justify-center border-b border-white/40">
                         <img src="images/Sentiment.png" alt="Sentiment Analysis Project" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                         <div class="w-24 h-24 rounded-full border border-white/60 absolute -bottom-6 -right-4 blur-[2px]"></div>
 
                     </div>
-                    <div class="p-6 space-y-3">
-                        <div class="flex gap-2 mb-2">
-                            <span class="tag-pill">Sentiment Analysis</span>
-                            <span class="tag-pill">Reddit API</span>
+
+                    <div class="p-6 space-y-2">
+
+                        <div class="flex gap-1 mb-0">
+                            <span class="tag-pill">Sentiment_Analysis</span>
+                            <span class="tag-pill">Reddit_API</span>
                             <span class="tag-pill">Phython</span>
                         </div>
-                        <h3 class="text-xl font-serif font-bold group-hover:text-teal-600 transition-colors">Quantitative Analysis of Social Support in Online Communities</h3>
+                    
+                        <h3 class="text-base font-semibold group-hover:text-teal-600 transition-colors">Quantitative Analysis of Social Support in Online Communities</h3>
                         <p class="text-sm font-normal text-brand-muted leading-relaxed">
                             A Quantitative study on r/mentalillness examined post flairs' effect on social support using sentiment analysis.
                         </p>
@@ -537,18 +552,18 @@
                 </a>
 
 
-                 <!-- Project 3 -->
+                 <!-- Project 4 -->
                 <a href="https://yinjythu.wixsite.com/home/starry-rain" class="glass-card overflow-hidden group block">
                     <div class="aspect-[2/1] bg-white/20 relative overflow-hidden flex items-center justify-center border-b border-white/40">
                         <img src="images/Starry.png" alt="Starry Rain Project" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                         <div class="w-24 h-24 rounded-full border border-white/60 absolute -bottom-6 -right-4 blur-[2px]"></div>
                     </div>
-                    <div class="p-6 space-y-3">
-                        <div class="flex gap-2 mb-2">
+                    <div class="p-6 space-y-2">
+                        <div class="flex gap-2 mb-0">
                             <span class="tag-pill">UXD Internship</span>
                             <span class="tag-pill"> AI For Good</span>
                         </div>
-                        <h3 class="text-xl font-serif font-bold group-hover:text-sky-500 transition-colors">Starry Rain: Empower Autistic Children</h3>
+                        <h3 class="text-base font-semibold group-hover:text-sky-500 transition-colors">Starry Rain: Empower Autistic Children</h3>
                         <p class="text-sm font-normal text-brand-muted leading-relaxed">
                             Design a system to help the treatment and evaluation of children with autism.
                         </p>
@@ -556,19 +571,23 @@
                 </a>
 
 
-                <!-- Project 4 -->
+                <!-- Project 5 -->
                 <a href="https://yinjythu.wixsite.com/home/interacting-with-poem" class="glass-card overflow-hidden group block">
                     <div class="aspect-[2/1] bg-white/20 relative overflow-hidden flex items-center justify-center border-b border-white/40">
                         <img src="images/poem.gif" alt="Interacting with Ancient Poem Project" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                         <div class="w-24 h-24 rounded-full border border-white/60 absolute -bottom-6 -right-4 blur-[2px]"></div>
                     </div>
-                    <div class="p-6 space-y-3">
-                        <div class="flex gap-2 mb-2">
+                    <div class="p-6 space-y-2">
+                        <div class="flex gap-1 mb-0">
                             <span class="tag-pill">Interactive Installation</span>
                             <span class="tag-pill">Display Design</span>
-                            <span class="tag-pill">Computer Vision</span>
                         </div>
-                        <h3 class="text-xl font-serif font-bold group-hover:text-purple-600 transition-colors">Interacting with Ancient Poem</h3>
+
+                        <div class="flex gap-1 mb-0">
+                                <span class="tag-pill">Computer Vision</span>
+                        </div>
+
+                        <h3 class="text-base font-semibold group-hover:text-purple-600 transition-colors">Interacting with Ancient Poem</h3>
                         <p class="text-sm font-normal text-brand-muted leading-relaxed">
                             An art installation to interact with ancient poems through hand gesture shadow.
                         </p>
@@ -682,7 +701,7 @@
     <!-- Footer -->
     <footer id="contact" class="border-t border-white/40 mt-12 glass-panel rounded-none rounded-t-3xl pb-12 pt-16">
         <div class="max-w-5xl mx-auto px-6 text-center space-y-8">
-            <h2 class="text-4xl font-serif font-bold">Let's connect!</h2>
+            <h2 class="text-2xl font-serif font-bold">Let's connect!</h2>
             <p class="text-brand-muted font-normal max-w-xl mx-auto">
                 I am always open to discussing research collaborations, mentoring students,
                 or chatting about HCI/design/photography. Feel free to reach out to me via email or connect on LinkedIn!
